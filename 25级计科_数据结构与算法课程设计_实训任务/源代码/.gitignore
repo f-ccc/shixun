@@ -1,0 +1,12 @@
+# 编译输出
+*.exe
+*.o
+*.obj
+*.layout
+
+# IDE文件
+*.dev
+
+# Python脚本（仅用于自动生成，非项目代码）
+*.py
+*.json
