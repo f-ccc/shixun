@@ -8,7 +8,8 @@
 
 HashTable* hash_init(void) {
     int i;
-    HashTable *table = (HashTable*)malloc(sizeof(HashTable));
+    HashTable *table;
+    table = (HashTable*)malloc(sizeof(HashTable));
     if (!table) return NULL;
     for (i = 0; i < HASH_TABLE_SIZE; i++)
         table->buckets[i] = NULL;
@@ -17,10 +18,9 @@ HashTable* hash_init(void) {
 }
 
 int hash_func(const char *student_id) {
-    int i;
-    /* 取学号后6位作为键值 */
-    int key = 0;
-    int len = strlen(student_id);
+    int key, i, len;
+    key = 0;
+    len = strlen(student_id);
     for (i = (len > 6) ? len - 6 : 0; i < len; i++) {
         if (student_id[i] >= '0' && student_id[i] <= '9')
             key = key * 10 + (student_id[i] - '0');
@@ -29,19 +29,17 @@ int hash_func(const char *student_id) {
 }
 
 int hash_insert(HashTable *table, StudentRecord rec) {
+    int index;
+    HashNode *cur, *node;
     if (!table) return RES_ERR;
-    int index = hash_func(rec.student_id);
-
-    /* 检查是否已存在 */
-    HashNode *cur = table->buckets[index];
+    index = hash_func(rec.student_id);
+    cur = table->buckets[index];
     while (cur) {
         if (strcmp(cur->data.student_id, rec.student_id) == 0)
             return RES_DUP;
         cur = cur->next;
     }
-
-    /* 头插法 */
-    HashNode *node = (HashNode*)malloc(sizeof(HashNode));
+    node = (HashNode*)malloc(sizeof(HashNode));
     if (!node) return RES_ERR;
     node->data = rec;
     node->next = table->buckets[index];
@@ -51,11 +49,12 @@ int hash_insert(HashTable *table, StudentRecord rec) {
 }
 
 int hash_delete(HashTable *table, const char *sid, const char *cid) {
+    int index;
+    HashNode *cur, *prev;
     if (!table) return RES_ERR;
-    int index = hash_func(sid);
-    HashNode *cur = table->buckets[index];
-    HashNode *prev = NULL;
-
+    index = hash_func(sid);
+    cur = table->buckets[index];
+    prev = NULL;
     while (cur) {
         if (strcmp(cur->data.student_id, sid) == 0 &&
             strcmp(cur->data.course_id, cid) == 0) {
@@ -74,12 +73,13 @@ int hash_delete(HashTable *table, const char *sid, const char *cid) {
 }
 
 HashNode* hash_find(HashTable *table, const char *sid) {
+    int index;
+    HashNode *cur;
     if (!table) return NULL;
-    int index = hash_func(sid);
-    HashNode *cur = table->buckets[index];
+    index = hash_func(sid);
+    cur = table->buckets[index];
     while (cur) {
-        if (strcmp(cur->data.student_id, sid) == 0)
-            return cur;
+        if (strcmp(cur->data.student_id, sid) == 0) return cur;
         cur = cur->next;
     }
     return NULL;
@@ -87,9 +87,10 @@ HashNode* hash_find(HashTable *table, const char *sid) {
 
 void hash_traverse(HashTable *table, VisitFunc visit) {
     int i;
+    HashNode *cur;
     if (!table) return;
     for (i = 0; i < HASH_TABLE_SIZE; i++) {
-        HashNode *cur = table->buckets[i];
+        cur = table->buckets[i];
         while (cur) {
             visit(&cur->data);
             cur = cur->next;
@@ -98,11 +99,12 @@ void hash_traverse(HashTable *table, VisitFunc visit) {
 }
 
 int hash_to_array(HashTable *table, StudentRecord *arr, int max_size) {
-    int i;
+    int i, count;
+    HashNode *cur;
     if (!table) return 0;
-    int count = 0;
+    count = 0;
     for (i = 0; i < HASH_TABLE_SIZE && count < max_size; i++) {
-        HashNode *cur = table->buckets[i];
+        cur = table->buckets[i];
         while (cur && count < max_size) {
             arr[count++] = cur->data;
             cur = cur->next;
@@ -112,14 +114,15 @@ int hash_to_array(HashTable *table, StudentRecord *arr, int max_size) {
 }
 
 static void swap_rec(StudentRecord *a, StudentRecord *b) {
-    StudentRecord t = *a;
+    StudentRecord t;
+    t = *a;
     *a = *b;
     *b = t;
 }
 
 int hash_sort_by_score(HashTable *table, StudentRecord *arr, int ascending) {
-    int i, j;
-    int n = hash_to_array(table, arr, 100000);
+    int i, j, n;
+    n = hash_to_array(table, arr, 100000);
     for (i = 0; i < n - 1; i++) {
         for (j = 0; j < n - 1 - i; j++) {
             if (ascending) {
@@ -140,11 +143,12 @@ int hash_size(HashTable *table) {
 
 void hash_destroy(HashTable *table) {
     int i;
+    HashNode *cur, *next;
     if (!table) return;
     for (i = 0; i < HASH_TABLE_SIZE; i++) {
-        HashNode *cur = table->buckets[i];
+        cur = table->buckets[i];
         while (cur) {
-            HashNode *next = cur->next;
+            next = cur->next;
             free(cur);
             cur = next;
         }

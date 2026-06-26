@@ -8,21 +8,16 @@
 
 int filter_records(DataManager *dm, FilterCondition *cond,
                    StudentRecord *result, int max_result) {
-    int i;
+    int i, total, n, count, match;
+    StudentRecord *all;
     if (!dm) return 0;
-
-    /* 先获取所有记录 */
-    int total = dm_size(dm);
+    total = dm_size(dm);
     if (total <= 0) return 0;
-
-    StudentRecord *all = (StudentRecord*)malloc(total * sizeof(StudentRecord));
-    int n = dm_to_array(dm, all, total);
-
-    int count = 0;
+    all = (StudentRecord*)malloc(total * sizeof(StudentRecord));
+    n = dm_to_array(dm, all, total);
+    count = 0;
     for (i = 0; i < n && count < max_result; i++) {
-        int match = 1;
-
-        /* 课程名称筛选 */
+        match = 1;
         if (cond->course_name[0] != '\0') {
             if (cond->fuzzy_match) {
                 if (strstr(all[i].course_name, cond->course_name) == NULL)
@@ -32,30 +27,19 @@ int filter_records(DataManager *dm, FilterCondition *cond,
                     match = 0;
             }
         }
-
-        /* 学期筛选 */
         if (match && cond->semester[0] != '\0') {
-            if (strcmp(all[i].semester, cond->semester) != 0)
-                match = 0;
+            if (strcmp(all[i].semester, cond->semester) != 0) match = 0;
         }
-
-        /* 成绩区间筛选 */
         if (match && cond->score_min != -1) {
             if (all[i].score < cond->score_min) match = 0;
         }
         if (match && cond->score_max != -1) {
             if (all[i].score > cond->score_max) match = 0;
         }
-
-        /* 学院筛选 */
         if (match && cond->college[0] != '\0') {
-            if (strcmp(all[i].college, cond->college) != 0)
-                match = 0;
+            if (strcmp(all[i].college, cond->college) != 0) match = 0;
         }
-
-        if (match) {
-            result[count++] = all[i];
-        }
+        if (match) result[count++] = all[i];
     }
     free(all);
     return count;
@@ -63,34 +47,31 @@ int filter_records(DataManager *dm, FilterCondition *cond,
 
 int multi_key_sort(StudentRecord *arr, int size,
                    SortCondition *sort_keys, int key_count) {
-    int i, j, k;
+    int i, j, k, cmp, need_swap;
+    StudentRecord tmp;
     if (size <= 1 || key_count <= 0) return size;
-
-    /* 使用冒泡排序实现多关键字排序 */
     for (i = 0; i < size - 1; i++) {
         for (j = 0; j < size - 1 - i; j++) {
-            /* 多关键字比较 */
-            int need_swap = 0;
+            need_swap = 0;
             for (k = 0; k < key_count; k++) {
-                int cmp = 0;
-                const char *field = sort_keys[k].field;
-
-                if (strcmp(field, "score") == 0 || strcmp(field, "成绩") == 0) {
+                cmp = 0;
+                if (strcmp(sort_keys[k].field, "score") == 0 ||
+                    strcmp(sort_keys[k].field, "\u6210\u7ee9") == 0) {
                     cmp = arr[j].score - arr[j+1].score;
-                } else if (strcmp(field, "student_id") == 0 || strcmp(field, "学号") == 0) {
+                } else if (strcmp(sort_keys[k].field, "student_id") == 0 ||
+                           strcmp(sort_keys[k].field, "\u5b66\u53f7") == 0) {
                     cmp = strcmp(arr[j].student_id, arr[j+1].student_id);
-                } else if (strcmp(field, "name") == 0 || strcmp(field, "姓名") == 0) {
+                } else if (strcmp(sort_keys[k].field, "name") == 0 ||
+                           strcmp(sort_keys[k].field, "\u59d3\u540d") == 0) {
                     cmp = strcmp(arr[j].name, arr[j+1].name);
                 }
-
                 if (cmp != 0) {
                     need_swap = sort_keys[k].dir ? (cmp > 0) : (cmp < 0);
                     break;
                 }
             }
-
             if (need_swap) {
-                StudentRecord tmp = arr[j];
+                tmp = arr[j];
                 arr[j] = arr[j+1];
                 arr[j+1] = tmp;
             }
@@ -109,14 +90,14 @@ void print_record(const StudentRecord *rec) {
 
 void print_header(void) {
     printf("+--------------+----------+------------------+----------+----------------------+-----+---------+------------+-----+\n");
-    printf("| 学号         | 姓名    | 学院             | 课程编号 | 课程名称             | 学分 | 学期   | 选课日期   | 成绩 |\n");
+    printf("| \u5b66\u53f7         | \u59d3\u540d    | \u5b66\u9662             | \u8bfe\u7a0b\u7f16\u53f7 | \u8bfe\u7a0b\u540d\u79f0             | \u5b66\u5206 | \u5b66\u671f   | \u9009\u8bfe\u65e5\u671f   | \u6210\u7ee9 |\n");
     printf("+--------------+----------+------------------+----------+----------------------+-----+---------+------------+-----+\n");
 }
 
 void print_records(const StudentRecord *arr, int size) {
     int i;
     if (size <= 0) {
-        printf("  (无记录)\n");
+        printf("  (\u65e0\u8bb0\u5f55)\n");
         return;
     }
     print_header();
@@ -124,22 +105,22 @@ void print_records(const StudentRecord *arr, int size) {
         print_record(&arr[i]);
     }
     printf("+--------------+----------+------------------+----------+----------------------+-----+---------+------------+-----+\n");
-    printf("  共 %d 条记录\n", size);
+    printf("  \u5171 %d \u6761\u8bb0\u5f55\n", size);
 }
 
 void print_filter_condition(FilterCondition *cond) {
-    printf("  筛选条件:\n");
+    printf("  \u7b5b\u9009\u6761\u4ef6:\n");
     if (cond->course_name[0]) {
-        printf("    课程名称: %s (%s)\n", cond->course_name,
-               cond->fuzzy_match ? "模糊" : "精确");
+        printf("    \u8bfe\u7a0b\u540d\u79f0: %s (%s)\n", cond->course_name,
+               cond->fuzzy_match ? "\u6a21\u7cca" : "\u7cbe\u786e");
     }
-    if (cond->semester[0]) printf("    学期: %s\n", cond->semester);
+    if (cond->semester[0]) printf("    \u5b66\u671f: %s\n", cond->semester);
     if (cond->score_min != -1 || cond->score_max != -1) {
-        printf("    成绩区间: ");
+        printf("    \u6210\u7ee9\u533a\u95f4: ");
         if (cond->score_min != -1) printf("%d", cond->score_min);
         printf(" - ");
         if (cond->score_max != -1) printf("%d", cond->score_max);
         printf("\n");
     }
-    if (cond->college[0]) printf("    学院: %s\n", cond->college);
+    if (cond->college[0]) printf("    \u5b66\u9662: %s\n", cond->college);
 }

@@ -1,6 +1,6 @@
 [Project]
-FileName=实训.dev
-Name=实训
+FileName=瀹炶.dev
+Name=瀹炶
 Type=1
 Ver=2
 ObjFiles=
@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0000000000000000101000000
-UnitCount=22
+UnitCount=21
 
 [VersionInfo]
 Major=1
@@ -50,18 +50,8 @@ ProductVersion=
 AutoIncBuildNr=0
 SyncProduct=1
 
-[Unit21]
-FileName=源代码\statistics.c
-CompileCpp=0
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
 [Unit1]
-FileName=源代码\avl.c
+FileName=婧愪唬鐮乗avl.c
 CompileCpp=0
 Folder=
 Compile=1
@@ -71,7 +61,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit2]
-FileName=源代码\avl.h
+FileName=婧愪唬鐮乗avl.h
 CompileCpp=0
 Folder=
 Compile=1
@@ -81,16 +71,17 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit3]
-FileName=源代码\avl.o
+FileName=婧愪唬鐮乗benchmark.c
+CompileCpp=0
 Folder=
-Compile=0
-Link=0
+Compile=1
+Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
 [Unit4]
-FileName=源代码\benchmark.c
+FileName=婧愪唬鐮乗benchmark.h
 CompileCpp=0
 Folder=
 Compile=1
@@ -100,7 +91,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit5]
-FileName=源代码\benchmark.h
+FileName=婧愪唬鐮乗fileio.c
 CompileCpp=0
 Folder=
 Compile=1
@@ -110,7 +101,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit6]
-FileName=源代码\fileio.c
+FileName=婧愪唬鐮乗fileio.h
 CompileCpp=0
 Folder=
 Compile=1
@@ -120,7 +111,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit7]
-FileName=源代码\fileio.h
+FileName=婧愪唬鐮乗filter_sort.c
 CompileCpp=0
 Folder=
 Compile=1
@@ -130,7 +121,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit8]
-FileName=源代码\filter_sort.c
+FileName=婧愪唬鐮乗filter_sort.h
 CompileCpp=0
 Folder=
 Compile=1
@@ -140,7 +131,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit9]
-FileName=源代码\filter_sort.h
+FileName=婧愪唬鐮乗generator.c
 CompileCpp=0
 Folder=
 Compile=1
@@ -150,7 +141,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit10]
-FileName=源代码\generator.c
+FileName=婧愪唬鐮乗generator.h
 CompileCpp=0
 Folder=
 Compile=1
@@ -160,7 +151,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit11]
-FileName=源代码\generator.h
+FileName=婧愪唬鐮乗hash.c
 CompileCpp=0
 Folder=
 Compile=1
@@ -170,7 +161,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit12]
-FileName=源代码\hash.c
+FileName=婧愪唬鐮乗hash.h
 CompileCpp=0
 Folder=
 Compile=1
@@ -180,7 +171,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit13]
-FileName=源代码\hash.h
+FileName=婧愪唬鐮乗list.c
 CompileCpp=0
 Folder=
 Compile=1
@@ -190,7 +181,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit14]
-FileName=源代码\list.c
+FileName=婧愪唬鐮乗list.h
 CompileCpp=0
 Folder=
 Compile=1
@@ -200,7 +191,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit15]
-FileName=源代码\list.h
+FileName=婧愪唬鐮乗main.c
 CompileCpp=0
 Folder=
 Compile=1
@@ -210,7 +201,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit16]
-FileName=源代码\main.c
+FileName=婧愪唬鐮乗operations.c
 CompileCpp=0
 Folder=
 Compile=1
@@ -220,7 +211,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit17]
-FileName=源代码\operations.c
+FileName=婧愪唬鐮乗operations.h
 CompileCpp=0
 Folder=
 Compile=1
@@ -230,7 +221,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit18]
-FileName=源代码\operations.h
+FileName=婧愪唬鐮乗record.h
 CompileCpp=0
 Folder=
 Compile=1
@@ -240,7 +231,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit19]
-FileName=源代码\record.h
+FileName=婧愪唬鐮乗statistics.c
 CompileCpp=0
 Folder=
 Compile=1
@@ -250,16 +241,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit20]
-FileName=源代码\records.csv
-Folder=
-Compile=0
-Link=0
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit22]
-FileName=源代码\statistics.h
+FileName=婧愪唬鐮乗statistics.h
 CompileCpp=0
 Folder=
 Compile=1
@@ -268,3 +250,11 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
+[Unit21]
+FileName=婧愪唬鐮乗records.csv
+Folder=
+Compile=0
+Link=0
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=

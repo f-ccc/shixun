@@ -42,18 +42,18 @@ typedef enum {
 
 /* 筛选条件结构体 */
 typedef struct {
-    char course_name[50];   /* 课程名称（空=不限制） */
-    int fuzzy_match;        /* 1=模糊匹配, 0=精确匹配 */
-    char semester[8];       /* 选课学期（空=不限制） */
-    int score_min;          /* 成绩下限（-1=不限制） */
-    int score_max;          /* 成绩上限（-1=不限制） */
-    char college[30];       /* 学院（空=不限制） */
+    char course_name[50];
+    int fuzzy_match;
+    char semester[8];
+    int score_min;
+    int score_max;
+    char college[30];
 } FilterCondition;
 
 /* 排序条件结构体 */
 typedef struct {
-    char field[20];         /* 排序字段名 */
-    SortDirection dir;      /* 排序方向 */
+    char field[20];
+    SortDirection dir;
 } SortCondition;
 
 /* 比较函数指针类型 */
@@ -62,4 +62,4 @@ typedef int (*CompareFunc)(const StudentRecord*, const StudentRecord*);
 /* 遍历访问函数指针类型 */
 typedef void (*VisitFunc)(const StudentRecord*);
 
-#endif /* RECORD_H */
+#endif

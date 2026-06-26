@@ -7,23 +7,17 @@
 #include <string.h>
 
 DataManager* dm_init(DataStructureType type) {
-    DataManager *dm = (DataManager*)malloc(sizeof(DataManager));
+    DataManager *dm;
+    dm = (DataManager*)malloc(sizeof(DataManager));
     if (!dm) return NULL;
     dm->type = type;
     dm->list = NULL;
     dm->avl = NULL;
     dm->hash = NULL;
-
     switch (type) {
-        case DS_LIST:
-            dm->list = list_init();
-            break;
-        case DS_AVL:
-            dm->avl = avl_init();
-            break;
-        case DS_HASH:
-            dm->hash = hash_init();
-            break;
+        case DS_LIST: dm->list = list_init(); break;
+        case DS_AVL:  dm->avl = avl_init(); break;
+        case DS_HASH: dm->hash = hash_init(); break;
     }
     return dm;
 }
@@ -49,36 +43,35 @@ int dm_delete(DataManager *dm, const char *sid, const char *cid) {
 }
 
 int dm_update(DataManager *dm, const char *sid, const char *cid, StudentRecord new_rec) {
-    /* 先删除后插入 */
-    int ret = dm_delete(dm, sid, cid);
+    int ret;
+    ret = dm_delete(dm, sid, cid);
     if (ret != RES_OK) return ret;
-    /* 保持学号和课程编号不变 */
     strcpy(new_rec.student_id, sid);
     strcpy(new_rec.course_id, cid);
     return dm_insert(dm, new_rec);
 }
 
 int dm_find(DataManager *dm, const char *sid, StudentRecord *result) {
+    DListNode *lnode;
+    AVLNode *anode;
+    HashNode *hnode;
     if (!dm || !result) return RES_ERR;
     switch (dm->type) {
-        case DS_LIST: {
-            DListNode *node = list_find_by_id(dm->list, sid);
-            if (!node) return RES_NOT_FOUND;
-            *result = node->data;
+        case DS_LIST:
+            lnode = list_find_by_id(dm->list, sid);
+            if (!lnode) return RES_NOT_FOUND;
+            *result = lnode->data;
             return RES_OK;
-        }
-        case DS_AVL: {
-            AVLNode *node = avl_find(dm->avl, sid);
-            if (!node) return RES_NOT_FOUND;
-            *result = node->data;
+        case DS_AVL:
+            anode = avl_find(dm->avl, sid);
+            if (!anode) return RES_NOT_FOUND;
+            *result = anode->data;
             return RES_OK;
-        }
-        case DS_HASH: {
-            HashNode *node = hash_find(dm->hash, sid);
-            if (!node) return RES_NOT_FOUND;
-            *result = node->data;
+        case DS_HASH:
+            hnode = hash_find(dm->hash, sid);
+            if (!hnode) return RES_NOT_FOUND;
+            *result = hnode->data;
             return RES_OK;
-        }
     }
     return RES_ERR;
 }
@@ -93,16 +86,15 @@ void dm_traverse(DataManager *dm, VisitFunc visit) {
 }
 
 int dm_sort_by_score(DataManager *dm, StudentRecord *arr, int ascending) {
+    int n;
     if (!dm) return 0;
     switch (dm->type) {
-        case DS_LIST: {
-            int n = list_size(dm->list);
+        case DS_LIST:
+            n = list_size(dm->list);
             if (n <= 0) return 0;
             list_to_array(dm->list, arr, n);
             list_sort_by_score(dm->list, ascending);
-            list_to_array(dm->list, arr, n);
-            return n;
-        }
+            return list_to_array(dm->list, arr, n);
         case DS_AVL:
             return avl_sort_by_score(dm->avl, arr, ascending);
         case DS_HASH:

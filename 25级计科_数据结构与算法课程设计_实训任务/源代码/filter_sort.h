@@ -6,24 +6,11 @@
 #include "record.h"
 #include "operations.h"
 
-/* 多条件筛选 */
-int filter_records(DataManager *dm, FilterCondition *cond,
-                   StudentRecord *result, int max_result);
-
-/* 多关键字排序 */
-int multi_key_sort(StudentRecord *arr, int size,
-                   SortCondition *sort_keys, int key_count);
-
-/* 打印筛选条件 */
-void print_filter_condition(FilterCondition *cond);
-
-/* 打印单条记录 */
+int filter_records(DataManager *dm, FilterCondition *cond, StudentRecord *result, int max_result);
+int multi_key_sort(StudentRecord *arr, int size, SortCondition *sort_keys, int key_count);
 void print_record(const StudentRecord *rec);
-
-/* 打印记录列表 */
-void print_records(const StudentRecord *arr, int size);
-
-/* 显示记录表头 */
 void print_header(void);
+void print_records(const StudentRecord *arr, int size);
+void print_filter_condition(FilterCondition *cond);
 
 #endif
