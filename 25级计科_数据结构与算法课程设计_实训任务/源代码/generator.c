@@ -154,7 +154,7 @@ int generate_records(StudentRecord *records, int count) {
 
 int generate_to_csv(const char *filename, int count) {
     StudentRecord *records = (StudentRecord*)malloc(count * sizeof(StudentRecord));
-    if (!records) return ERROR;
+    if (!records) return RES_ERR;
 
     generate_records(records, count);
     int ret = save_to_csv(filename, records, count);

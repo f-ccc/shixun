@@ -29,29 +29,29 @@ DataManager* dm_init(DataStructureType type) {
 }
 
 int dm_insert(DataManager *dm, StudentRecord rec) {
-    if (!dm) return ERROR;
+    if (!dm) return RES_ERR;
     switch (dm->type) {
         case DS_LIST: return list_insert(dm->list, rec);
         case DS_AVL:  return avl_insert(dm->avl, rec);
         case DS_HASH: return hash_insert(dm->hash, rec);
     }
-    return ERROR;
+    return RES_ERR;
 }
 
 int dm_delete(DataManager *dm, const char *sid, const char *cid) {
-    if (!dm) return ERROR;
+    if (!dm) return RES_ERR;
     switch (dm->type) {
         case DS_LIST: return list_delete(dm->list, sid, cid);
         case DS_AVL:  return avl_delete(dm->avl, sid, cid);
         case DS_HASH: return hash_delete(dm->hash, sid, cid);
     }
-    return ERROR;
+    return RES_ERR;
 }
 
 int dm_update(DataManager *dm, const char *sid, const char *cid, StudentRecord new_rec) {
     /* 先删除后插入 */
     int ret = dm_delete(dm, sid, cid);
-    if (ret != OK) return ret;
+    if (ret != RES_OK) return ret;
     /* 保持学号和课程编号不变 */
     strcpy(new_rec.student_id, sid);
     strcpy(new_rec.course_id, cid);
@@ -59,28 +59,28 @@ int dm_update(DataManager *dm, const char *sid, const char *cid, StudentRecord n
 }
 
 int dm_find(DataManager *dm, const char *sid, StudentRecord *result) {
-    if (!dm || !result) return ERROR;
+    if (!dm || !result) return RES_ERR;
     switch (dm->type) {
         case DS_LIST: {
             DListNode *node = list_find_by_id(dm->list, sid);
-            if (!node) return NOT_FOUND;
+            if (!node) return RES_NOT_FOUND;
             *result = node->data;
-            return OK;
+            return RES_OK;
         }
         case DS_AVL: {
             AVLNode *node = avl_find(dm->avl, sid);
-            if (!node) return NOT_FOUND;
+            if (!node) return RES_NOT_FOUND;
             *result = node->data;
-            return OK;
+            return RES_OK;
         }
         case DS_HASH: {
             HashNode *node = hash_find(dm->hash, sid);
-            if (!node) return NOT_FOUND;
+            if (!node) return RES_NOT_FOUND;
             *result = node->data;
-            return OK;
+            return RES_OK;
         }
     }
-    return ERROR;
+    return RES_ERR;
 }
 
 void dm_traverse(DataManager *dm, VisitFunc visit) {

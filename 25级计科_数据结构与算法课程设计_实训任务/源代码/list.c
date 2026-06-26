@@ -16,9 +16,9 @@ DLinkedList* list_init(void) {
 }
 
 int list_insert(DLinkedList *list, StudentRecord rec) {
-    if (!list) return ERROR;
+    if (!list) return RES_ERR;
     DListNode *node = (DListNode*)malloc(sizeof(DListNode));
-    if (!node) return ERROR;
+    if (!node) return RES_ERR;
     node->data = rec;
     node->next = NULL;
     node->prev = list->tail;
@@ -30,11 +30,11 @@ int list_insert(DLinkedList *list, StudentRecord rec) {
     }
     list->tail = node;
     list->size++;
-    return OK;
+    return RES_OK;
 }
 
 int list_delete(DLinkedList *list, const char *sid, const char *cid) {
-    if (!list || !list->head) return ERROR;
+    if (!list || !list->head) return RES_ERR;
     DListNode *cur = list->head;
     while (cur) {
         if (strcmp(cur->data.student_id, sid) == 0 &&
@@ -52,22 +52,22 @@ int list_delete(DLinkedList *list, const char *sid, const char *cid) {
 
             free(cur);
             list->size--;
-            return OK;
+            return RES_OK;
         }
         cur = cur->next;
     }
-    return NOT_FOUND;
+    return RES_NOT_FOUND;
 }
 
 int list_update(DLinkedList *list, const char *sid, const char *cid, StudentRecord new_rec) {
     (void)cid;  /* 暂未使用课程编号匹配 */
     DListNode *node = list_find_by_id(list, sid);
-    if (!node) return NOT_FOUND;
+    if (!node) return RES_NOT_FOUND;
     /* 保持学号和课程编号不变 */
     strcpy(new_rec.student_id, node->data.student_id);
     strcpy(new_rec.course_id, node->data.course_id);
     node->data = new_rec;
-    return OK;
+    return RES_OK;
 }
 
 DListNode* list_find_by_id(DLinkedList *list, const char *sid) {

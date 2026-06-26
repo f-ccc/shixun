@@ -56,7 +56,7 @@ static int get_balance(AVLNode *node) {
 /* 递归插入（内部函数） */
 static AVLNode* insert_node(AVLNode *node, StudentRecord rec, int *result) {
     if (node == NULL) {
-        *result = OK;
+        *result = RES_OK;
         return create_node(rec);
     }
 
@@ -66,7 +66,7 @@ static AVLNode* insert_node(AVLNode *node, StudentRecord rec, int *result) {
     else if (cmp > 0)
         node->right = insert_node(node->right, rec, result);
     else {
-        *result = DUPLICATE;  /* 学号重复 */
+        *result = RES_DUP;  /* 学号重复 */
         return node;
     }
 
@@ -102,7 +102,7 @@ static AVLNode* min_value_node(AVLNode *node) {
 /* 递归删除（内部函数） */
 static AVLNode* delete_node(AVLNode *node, const char *sid, const char *cid, int *result) {
     if (node == NULL) {
-        *result = NOT_FOUND;
+        *result = RES_NOT_FOUND;
         return NULL;
     }
 
@@ -117,7 +117,7 @@ static AVLNode* delete_node(AVLNode *node, const char *sid, const char *cid, int
             /* 课程编号不匹配，继续在右子树找（学号可能重复，但我们的设计中学号唯一） */
             node->right = delete_node(node->right, sid, cid, result);
         } else {
-            *result = OK;
+            *result = RES_OK;
             if (node->left == NULL || node->right == NULL) {
                 AVLNode *temp = node->left ? node->left : node->right;
                 if (temp == NULL) {
@@ -166,18 +166,18 @@ AVLTree* avl_init(void) {
 }
 
 int avl_insert(AVLTree *tree, StudentRecord rec) {
-    if (!tree) return ERROR;
+    if (!tree) return RES_ERR;
     int result;
     tree->root = insert_node(tree->root, rec, &result);
-    if (result == OK) tree->size++;
+    if (result == RES_OK) tree->size++;
     return result;
 }
 
 int avl_delete(AVLTree *tree, const char *sid, const char *cid) {
-    if (!tree) return ERROR;
+    if (!tree) return RES_ERR;
     int result;
     tree->root = delete_node(tree->root, sid, cid, &result);
-    if (result == OK) tree->size--;
+    if (result == RES_OK) tree->size--;
     return result;
 }
 

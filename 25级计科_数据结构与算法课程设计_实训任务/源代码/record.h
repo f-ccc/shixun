@@ -27,11 +27,11 @@ typedef enum {
 
 /* 操作结果 */
 typedef enum {
-    OK = 0,
-    ERROR = -1,
-    NOT_FOUND = -2,
-    DUPLICATE = -3,
-    INVALID_INPUT = -4
+    RES_OK = 0,
+    RES_ERR = -1,
+    RES_NOT_FOUND = -2,
+    RES_DUP = -3,
+    RES_INVALID = -4
 } ResultCode;
 
 /* 排序方向 */

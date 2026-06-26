@@ -27,29 +27,29 @@ int hash_func(const char *student_id) {
 }
 
 int hash_insert(HashTable *table, StudentRecord rec) {
-    if (!table) return ERROR;
+    if (!table) return RES_ERR;
     int index = hash_func(rec.student_id);
 
     /* 检查是否已存在 */
     HashNode *cur = table->buckets[index];
     while (cur) {
         if (strcmp(cur->data.student_id, rec.student_id) == 0)
-            return DUPLICATE;
+            return RES_DUP;
         cur = cur->next;
     }
 
     /* 头插法 */
     HashNode *node = (HashNode*)malloc(sizeof(HashNode));
-    if (!node) return ERROR;
+    if (!node) return RES_ERR;
     node->data = rec;
     node->next = table->buckets[index];
     table->buckets[index] = node;
     table->size++;
-    return OK;
+    return RES_OK;
 }
 
 int hash_delete(HashTable *table, const char *sid, const char *cid) {
-    if (!table) return ERROR;
+    if (!table) return RES_ERR;
     int index = hash_func(sid);
     HashNode *cur = table->buckets[index];
     HashNode *prev = NULL;
@@ -63,12 +63,12 @@ int hash_delete(HashTable *table, const char *sid, const char *cid) {
                 table->buckets[index] = cur->next;
             free(cur);
             table->size--;
-            return OK;
+            return RES_OK;
         }
         prev = cur;
         cur = cur->next;
     }
-    return NOT_FOUND;
+    return RES_NOT_FOUND;
 }
 
 HashNode* hash_find(HashTable *table, const char *sid) {

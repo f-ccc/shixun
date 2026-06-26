@@ -60,7 +60,7 @@ int load_records(const char *filename, StudentRecord *records, int max_size) {
 
 int save_to_csv(const char *filename, StudentRecord *arr, int size) {
     FILE *fp = fopen(filename, "w");
-    if (!fp) return ERROR;
+    if (!fp) return RES_ERR;
 
     fprintf(fp, "学号,姓名,学院,课程编号,课程名称,学分,选课学期,选课日期,成绩\n");
     for (int i = 0; i < size; i++) {
@@ -71,7 +71,7 @@ int save_to_csv(const char *filename, StudentRecord *arr, int size) {
                 arr[i].enroll_date, arr[i].score);
     }
     fclose(fp);
-    return OK;
+    return RES_OK;
 }
 
 int export_to_csv(const char *filename, StudentRecord *arr, int size) {

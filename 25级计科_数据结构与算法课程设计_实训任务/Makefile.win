@@ -1,0 +1,55 @@
+# Project: 实训
+# Makefile created by Dev-C++ 5.9.2
+
+CPP      = g++.exe -D__DEBUG__
+CC       = gcc.exe -D__DEBUG__
+WINDRES  = windres.exe
+OBJ      = 源代码/avl.o 源代码/benchmark.o 源代码/fileio.o 源代码/filter_sort.o 源代码/generator.o 源代码/hash.o 源代码/list.o 源代码/main.o 源代码/operations.o 源代码/statistics.o
+LINKOBJ  = 源代码/avl.o 源代码/benchmark.o 源代码/fileio.o 源代码/filter_sort.o 源代码/generator.o 源代码/hash.o 源代码/list.o 源代码/main.o 源代码/operations.o 源代码/statistics.o
+LIBS     = -L"D:/tools/Dev-Cpp/MinGW64/lib" -L"D:/tools/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -lm -pg -g3
+INCS     = -I"D:/tools/Dev-Cpp/MinGW64/include" -I"D:/tools/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/tools/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.8.1/include"
+CXXINCS  = -I"D:/tools/Dev-Cpp/MinGW64/include" -I"D:/tools/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"D:/tools/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.8.1/include" -I"D:/tools/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.8.1/include/c++"
+BIN      = 实训.exe
+CXXFLAGS = $(CXXINCS) -pg -g3
+CFLAGS   = $(INCS) -std=c99 -pg -g3
+RM       = rm.exe -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+源代码/avl.o: 源代码/avl.c
+	$(CC) -c 源代码/avl.c -o 源代码/avl.o $(CFLAGS)
+
+源代码/benchmark.o: 源代码/benchmark.c
+	$(CC) -c 源代码/benchmark.c -o 源代码/benchmark.o $(CFLAGS)
+
+源代码/fileio.o: 源代码/fileio.c
+	$(CC) -c 源代码/fileio.c -o 源代码/fileio.o $(CFLAGS)
+
+源代码/filter_sort.o: 源代码/filter_sort.c
+	$(CC) -c 源代码/filter_sort.c -o 源代码/filter_sort.o $(CFLAGS)
+
+源代码/generator.o: 源代码/generator.c
+	$(CC) -c 源代码/generator.c -o 源代码/generator.o $(CFLAGS)
+
+源代码/hash.o: 源代码/hash.c
+	$(CC) -c 源代码/hash.c -o 源代码/hash.o $(CFLAGS)
+
+源代码/list.o: 源代码/list.c
+	$(CC) -c 源代码/list.c -o 源代码/list.o $(CFLAGS)
+
+源代码/main.o: 源代码/main.c
+	$(CC) -c 源代码/main.c -o 源代码/main.o $(CFLAGS)
+
+源代码/operations.o: 源代码/operations.c
+	$(CC) -c 源代码/operations.c -o 源代码/operations.o $(CFLAGS)
+
+源代码/statistics.o: 源代码/statistics.c
+	$(CC) -c 源代码/statistics.c -o 源代码/statistics.o $(CFLAGS)

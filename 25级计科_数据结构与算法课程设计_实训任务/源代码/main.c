@@ -7,6 +7,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 #include "record.h"
 #include "list.h"
@@ -49,6 +52,11 @@ static void handle_show_all(void);
 static void save_and_exit(void);
 
 int main(void) {
+#ifdef _WIN32
+    /* 设置控制台为UTF-8编码，解决中文乱码 */
+    SetConsoleOutputCP(65001);
+    SetConsoleCP(65001);
+#endif
     /* 初始化 */
     printf("\n");
     printf("============================================================\n");
@@ -136,11 +144,11 @@ static void handle_insert(void) {
     }
 
     int ret = dm_insert(g_dm, rec);
-    if (ret == OK) {
+    if (ret == RES_OK) {
         if (g_record_count < MAX_RECORDS)
             g_all_records[g_record_count++] = rec;
         printf("  插入成功! 当前记录数: %d\n", dm_size(g_dm));
-    } else if (ret == DUPLICATE) {
+    } else if (ret == RES_DUP) {
         printf("  错误: 该学号已存在!\n");
     } else {
         printf("  插入失败!\n");
@@ -154,7 +162,7 @@ static void handle_delete(void) {
     printf("  课程编号: "); scanf("%8s", cid);
 
     int ret = dm_delete(g_dm, sid, cid);
-    if (ret == OK) {
+    if (ret == RES_OK) {
         /* 也从全局数组删除 */
         for (int i = 0; i < g_record_count; i++) {
             if (strcmp(g_all_records[i].student_id, sid) == 0 &&
@@ -189,7 +197,7 @@ static void handle_update(void) {
     printf("  新成绩(0-100): "); scanf("%d", &new_rec.score);
 
     int ret = dm_update(g_dm, sid, cid, new_rec);
-    if (ret == OK) {
+    if (ret == RES_OK) {
         /* 更新全局数组 */
         for (int i = 0; i < g_record_count; i++) {
             if (strcmp(g_all_records[i].student_id, sid) == 0 &&
@@ -218,7 +226,7 @@ static void handle_find(void) {
 
     /* 先按学号查找 */
     StudentRecord result;
-    if (dm_find(g_dm, keyword, &result) == OK) {
+    if (dm_find(g_dm, keyword, &result) == RES_OK) {
         printf("  找到记录:\n");
         print_header();
         print_record(&result);
@@ -307,7 +315,7 @@ static void handle_filter(void) {
         if (export_choice) {
             char fname[100];
             printf("  文件名: "); scanf("%99s", fname);
-            if (export_to_csv(fname, results, n) == OK)
+            if (export_to_csv(fname, results, n) == RES_OK)
                 printf("  已导出到 %s\n", fname);
             else
                 printf("  导出失败!\n");
@@ -472,7 +480,7 @@ static void handle_generate(void) {
 
     printf("  正在生成 %d 条数据...\n", count);
     int ret = generate_to_csv(DATA_FILE, count);
-    if (ret == OK) {
+    if (ret == RES_OK) {
         printf("  数据已生成并保存到 %s\n", DATA_FILE);
         /* 重新加载 */
         dm_destroy(g_dm);
