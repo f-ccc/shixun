@@ -1,8 +1,0 @@
-# 编译生成文件
-*.o
-*.out
-*.exe
-# 测试csv数据
-*.csv
-# Windows系统文件
-Thumbs.db
