@@ -215,11 +215,12 @@ static void swap_rec(StudentRecord *a, StudentRecord *b) {
 }
 
 int avl_sort_by_score(AVLTree *tree, StudentRecord *arr, int ascending) {
+    int i, j;
     if (!tree) return 0;
     int n = avl_inorder_to_array(tree->root, arr, 0);
     /* 按成绩排序（冒泡） */
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - 1 - i; j++) {
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - 1 - i; j++) {
             if (ascending) {
                 if (arr[j].score > arr[j + 1].score)
                     swap_rec(&arr[j], &arr[j + 1]);

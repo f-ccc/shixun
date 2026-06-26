@@ -8,6 +8,7 @@
 
 int filter_records(DataManager *dm, FilterCondition *cond,
                    StudentRecord *result, int max_result) {
+    int i;
     if (!dm) return 0;
 
     /* 先获取所有记录 */
@@ -18,7 +19,7 @@ int filter_records(DataManager *dm, FilterCondition *cond,
     int n = dm_to_array(dm, all, total);
 
     int count = 0;
-    for (int i = 0; i < n && count < max_result; i++) {
+    for (i = 0; i < n && count < max_result; i++) {
         int match = 1;
 
         /* 课程名称筛选 */
@@ -60,18 +61,17 @@ int filter_records(DataManager *dm, FilterCondition *cond,
     return count;
 }
 
-
-
 int multi_key_sort(StudentRecord *arr, int size,
                    SortCondition *sort_keys, int key_count) {
+    int i, j, k;
     if (size <= 1 || key_count <= 0) return size;
 
     /* 使用冒泡排序实现多关键字排序 */
-    for (int i = 0; i < size - 1; i++) {
-        for (int j = 0; j < size - 1 - i; j++) {
+    for (i = 0; i < size - 1; i++) {
+        for (j = 0; j < size - 1 - i; j++) {
             /* 多关键字比较 */
             int need_swap = 0;
-            for (int k = 0; k < key_count; k++) {
+            for (k = 0; k < key_count; k++) {
                 int cmp = 0;
                 const char *field = sort_keys[k].field;
 
@@ -114,12 +114,13 @@ void print_header(void) {
 }
 
 void print_records(const StudentRecord *arr, int size) {
+    int i;
     if (size <= 0) {
         printf("  (无记录)\n");
         return;
     }
     print_header();
-    for (int i = 0; i < size; i++) {
+    for (i = 0; i < size; i++) {
         print_record(&arr[i]);
     }
     printf("+--------------+----------+------------------+----------+----------------------+-----+---------+------------+-----+\n");

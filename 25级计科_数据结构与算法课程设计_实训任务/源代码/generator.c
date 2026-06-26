@@ -118,9 +118,10 @@ static int generate_score(void) {
 }
 
 int generate_records(StudentRecord *records, int count) {
+    int i;
     srand((unsigned int)time(NULL));
 
-    for (int i = 0; i < count; i++) {
+    for (i = 0; i < count; i++) {
         StudentRecord rec;
 
         /* 生成学号 */

@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0000000000000000101000000
-UnitCount=21
+UnitCount=22
 
 [VersionInfo]
 Major=1
@@ -49,6 +49,16 @@ ProductName=
 ProductVersion=
 AutoIncBuildNr=0
 SyncProduct=1
+
+[Unit21]
+FileName=源代码\statistics.c
+CompileCpp=0
+Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
 
 [Unit1]
 FileName=源代码\avl.c
@@ -71,6 +81,15 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit3]
+FileName=源代码\avl.o
+Folder=
+Compile=0
+Link=0
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit4]
 FileName=源代码\benchmark.c
 CompileCpp=0
 Folder=
@@ -80,21 +99,12 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit4]
+[Unit5]
 FileName=源代码\benchmark.h
 CompileCpp=0
 Folder=
 Compile=1
 Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit5]
-FileName=源代码\course_system.exe
-Folder=
-Compile=0
-Link=0
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
@@ -240,16 +250,15 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit20]
-FileName=源代码\statistics.c
-CompileCpp=0
+FileName=源代码\records.csv
 Folder=
-Compile=1
-Link=1
+Compile=0
+Link=0
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit21]
+[Unit22]
 FileName=源代码\statistics.h
 CompileCpp=0
 Folder=

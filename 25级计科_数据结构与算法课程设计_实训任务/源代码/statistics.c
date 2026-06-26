@@ -7,6 +7,7 @@
 #include <string.h>
 
 void stat_course_enrollment(DataManager *dm, int capacity) {
+    int i, j;
     int total = dm_size(dm);
     if (total <= 0) { printf("  暂无数据。\n"); return; }
 
@@ -23,9 +24,9 @@ void stat_course_enrollment(DataManager *dm, int capacity) {
     CourseStat *stats = (CourseStat*)malloc(n * sizeof(CourseStat));
     int stat_count = 0;
 
-    for (int i = 0; i < n; i++) {
+    for (i = 0; i < n; i++) {
         int found = 0;
-        for (int j = 0; j < stat_count; j++) {
+        for (j = 0; j < stat_count; j++) {
             if (strcmp(stats[j].course_name, all[i].course_name) == 0) {
                 stats[j].count++;
                 found = 1;
@@ -44,7 +45,7 @@ void stat_course_enrollment(DataManager *dm, int capacity) {
     printf("  +------------------------------+----------+-------+---------+\n");
     printf("  | 课程名称                     | 课程编号 | 人数  | 使用率  |\n");
     printf("  +------------------------------+----------+-------+---------+\n");
-    for (int i = 0; i < stat_count; i++) {
+    for (i = 0; i < stat_count; i++) {
         float usage = (float)stats[i].count / capacity * 100;
         printf("  | %-28s | %-8s | %5d | %5.1f%% |\n",
                stats[i].course_name, stats[i].course_id,
@@ -57,6 +58,7 @@ void stat_course_enrollment(DataManager *dm, int capacity) {
 }
 
 void stat_student_courses(DataManager *dm) {
+    int i, j;
     int total = dm_size(dm);
     if (total <= 0) { printf("  暂无数据。\n"); return; }
 
@@ -73,9 +75,9 @@ void stat_student_courses(DataManager *dm) {
     StudentStat *stats = (StudentStat*)malloc(n * sizeof(StudentStat));
     int stat_count = 0;
 
-    for (int i = 0; i < n; i++) {
+    for (i = 0; i < n; i++) {
         int found = 0;
-        for (int j = 0; j < stat_count; j++) {
+        for (j = 0; j < stat_count; j++) {
             if (strcmp(stats[j].student_id, all[i].student_id) == 0) {
                 stats[j].course_count++;
                 stats[j].total_credit += all[i].credit;
@@ -96,7 +98,7 @@ void stat_student_courses(DataManager *dm) {
     printf("  +--------------+----------+-------------+------------+\n");
     printf("  | 学号         | 姓名    | 选课门数   | 总学分     |\n");
     printf("  +--------------+----------+-------------+------------+\n");
-    for (int i = 0; i < stat_count && i < 20; i++) {
+    for (i = 0; i < stat_count && i < 20; i++) {
         printf("  | %-12s | %-8s | %11d | %10.1f |\n",
                stats[i].student_id, stats[i].name,
                stats[i].course_count, stats[i].total_credit);
@@ -109,6 +111,7 @@ void stat_student_courses(DataManager *dm) {
 }
 
 void stat_college_distribution(DataManager *dm) {
+    int i, j;
     int total = dm_size(dm);
     if (total <= 0) { printf("  暂无数据。\n"); return; }
 
@@ -123,9 +126,9 @@ void stat_college_distribution(DataManager *dm) {
     CollegeStat *stats = (CollegeStat*)malloc(n * sizeof(CollegeStat));
     int stat_count = 0;
 
-    for (int i = 0; i < n; i++) {
+    for (i = 0; i < n; i++) {
         int found = 0;
-        for (int j = 0; j < stat_count; j++) {
+        for (j = 0; j < stat_count; j++) {
             if (strcmp(stats[j].college, all[i].college) == 0) {
                 stats[j].count++;
                 found = 1;
@@ -143,7 +146,7 @@ void stat_college_distribution(DataManager *dm) {
     printf("  +----------------------------+-------+\n");
     printf("  | 学院                       | 人数  |\n");
     printf("  +----------------------------+-------+\n");
-    for (int i = 0; i < stat_count; i++) {
+    for (i = 0; i < stat_count; i++) {
         printf("  | %-27s | %5d |\n", stats[i].college, stats[i].count);
     }
     printf("  +----------------------------+-------+\n");
@@ -153,6 +156,7 @@ void stat_college_distribution(DataManager *dm) {
 }
 
 void stat_semester_distribution(DataManager *dm) {
+    int i, j, k;
     int total = dm_size(dm);
     if (total <= 0) { printf("  暂无数据。\n"); return; }
 
@@ -171,14 +175,14 @@ void stat_semester_distribution(DataManager *dm) {
     SemesterStat *stats = (SemesterStat*)malloc(n * sizeof(SemesterStat));
     int stat_count = 0;
 
-    for (int i = 0; i < n; i++) {
+    for (i = 0; i < n; i++) {
         int found = 0;
-        for (int j = 0; j < stat_count; j++) {
+        for (j = 0; j < stat_count; j++) {
             if (strcmp(stats[j].semester, all[i].semester) == 0) {
                 stats[j].student_count++;
                 /* 检查课程是否已记录 */
                 int has_course = 0;
-                for (int k = 0; k < stats[j].course_n; k++) {
+                for (k = 0; k < stats[j].course_n; k++) {
                     if (strcmp(stats[j].courses[k], all[i].course_name) == 0) {
                         has_course = 1;
                         break;
@@ -205,7 +209,7 @@ void stat_semester_distribution(DataManager *dm) {
     printf("  +---------+-------------+-------------+\n");
     printf("  | 学期    | 选课人数   | 课程数      |\n");
     printf("  +---------+-------------+-------------+\n");
-    for (int i = 0; i < stat_count; i++) {
+    for (i = 0; i < stat_count; i++) {
         printf("  | %-7s | %11d | %11d |\n",
                stats[i].semester, stats[i].student_count, stats[i].course_n);
     }
@@ -216,6 +220,7 @@ void stat_semester_distribution(DataManager *dm) {
 }
 
 void stat_score_distribution(DataManager *dm) {
+    int i;
     int total = dm_size(dm);
     if (total <= 0) { printf("  暂无数据。\n"); return; }
 
@@ -224,7 +229,7 @@ void stat_score_distribution(DataManager *dm) {
 
     int excellent = 0, good = 0, medium = 0, pass = 0, fail = 0;
 
-    for (int i = 0; i < n; i++) {
+    for (i = 0; i < n; i++) {
         int s = all[i].score;
         if (s >= 90) excellent++;
         else if (s >= 80) good++;

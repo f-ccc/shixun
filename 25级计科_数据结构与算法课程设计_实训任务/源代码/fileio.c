@@ -59,11 +59,12 @@ int load_records(const char *filename, StudentRecord *records, int max_size) {
 }
 
 int save_to_csv(const char *filename, StudentRecord *arr, int size) {
+    int i;
     FILE *fp = fopen(filename, "w");
     if (!fp) return RES_ERR;
 
     fprintf(fp, "学号,姓名,学院,课程编号,课程名称,学分,选课学期,选课日期,成绩\n");
-    for (int i = 0; i < size; i++) {
+    for (i = 0; i < size; i++) {
         fprintf(fp, "%s,%s,%s,%s,%s,%.1f,%s,%s,%d\n",
                 arr[i].student_id, arr[i].name, arr[i].college,
                 arr[i].course_id, arr[i].course_name,

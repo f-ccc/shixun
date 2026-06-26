@@ -18,8 +18,9 @@ static double get_time_ms(void) {
 }
 
 double time_insert(void *ds, DataStructureType type, StudentRecord *data, int n) {
+    int i;
     double start = get_time_ms();
-    for (int i = 0; i < n; i++) {
+    for (i = 0; i < n; i++) {
         switch (type) {
             case DS_LIST: list_insert((DLinkedList*)ds, data[i]); break;
             case DS_AVL:  avl_insert((AVLTree*)ds, data[i]); break;
@@ -31,8 +32,9 @@ double time_insert(void *ds, DataStructureType type, StudentRecord *data, int n)
 }
 
 double time_find(void *ds, DataStructureType type, StudentRecord *data, int n) {
+    int i;
     double start = get_time_ms();
-    for (int i = 0; i < n; i++) {
+    for (i = 0; i < n; i++) {
         switch (type) {
             case DS_LIST: list_find_by_id((DLinkedList*)ds, data[i].student_id); break;
             case DS_AVL:  avl_find((AVLTree*)ds, data[i].student_id); break;
@@ -44,8 +46,9 @@ double time_find(void *ds, DataStructureType type, StudentRecord *data, int n) {
 }
 
 double time_delete(void *ds, DataStructureType type, StudentRecord *data, int n) {
+    int i;
     double start = get_time_ms();
-    for (int i = 0; i < n; i++) {
+    for (i = 0; i < n; i++) {
         switch (type) {
             case DS_LIST: list_delete((DLinkedList*)ds, data[i].student_id, data[i].course_id); break;
             case DS_AVL:  avl_delete((AVLTree*)ds, data[i].student_id, data[i].course_id); break;
@@ -133,6 +136,7 @@ static void* create_empty(DataStructureType type) {
 }
 
 void run_benchmark(int data_size) {
+    int i, t;
     printf("\n=================================================================\n");
     printf("  性能测试报告 (数据规模: %d 条)\n", data_size);
     printf("=================================================================\n");
@@ -150,7 +154,7 @@ void run_benchmark(int data_size) {
     printf("| 操作       | 数据结构     | 耗时(ms)   | 内存(MB)   | 单次(us)   |\n");
     printf("+------------+--------------+------------+------------+------------+\n");
 
-    for (int t = 0; t < type_count; t++) {
+    for (t = 0; t < type_count; t++) {
         void *ds = create_empty(types[t]);
 
         /* 插入测试 */
@@ -184,7 +188,7 @@ void run_benchmark(int data_size) {
         /* 删除测试前重新插入 */
         destroy_all(ds, types[t]);
         ds = create_empty(types[t]);
-        for (int i = 0; i < data_size; i++) {
+        for (i = 0; i < data_size; i++) {
             switch (types[t]) {
                 case DS_LIST: list_insert((DLinkedList*)ds, data[i]); break;
                 case DS_AVL:  avl_insert((AVLTree*)ds, data[i]); break;

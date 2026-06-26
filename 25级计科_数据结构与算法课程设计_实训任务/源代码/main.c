@@ -52,6 +52,7 @@ static void handle_show_all(void);
 static void save_and_exit(void);
 
 int main(void) {
+    int i;
 #ifdef _WIN32
     /* 设置控制台为UTF-8编码，解决中文乱码 */
     SetConsoleOutputCP(65001);
@@ -73,7 +74,7 @@ int main(void) {
 
     /* 从文件加载数据 */
     g_record_count = load_records(DATA_FILE, g_all_records, MAX_RECORDS);
-    for (int i = 0; i < g_record_count; i++) {
+    for (i = 0; i < g_record_count; i++) {
         dm_insert(g_dm, g_all_records[i]);
     }
     printf("  当前记录数: %d\n", g_record_count);
@@ -156,6 +157,7 @@ static void handle_insert(void) {
 }
 
 static void handle_delete(void) {
+    int i, j;
     char sid[13], cid[9];
     printf("\n  == 删除选课记录 ==\n");
     printf("  学号: "); scanf("%12s", sid);
@@ -164,10 +166,10 @@ static void handle_delete(void) {
     int ret = dm_delete(g_dm, sid, cid);
     if (ret == RES_OK) {
         /* 也从全局数组删除 */
-        for (int i = 0; i < g_record_count; i++) {
+        for (i = 0; i < g_record_count; i++) {
             if (strcmp(g_all_records[i].student_id, sid) == 0 &&
                 strcmp(g_all_records[i].course_id, cid) == 0) {
-                for (int j = i; j < g_record_count - 1; j++)
+                for (j = i; j < g_record_count - 1; j++)
                     g_all_records[j] = g_all_records[j + 1];
                 g_record_count--;
                 break;
@@ -180,6 +182,7 @@ static void handle_delete(void) {
 }
 
 static void handle_update(void) {
+    int i;
     char sid[13], cid[9];
     StudentRecord new_rec;
 
@@ -199,7 +202,7 @@ static void handle_update(void) {
     int ret = dm_update(g_dm, sid, cid, new_rec);
     if (ret == RES_OK) {
         /* 更新全局数组 */
-        for (int i = 0; i < g_record_count; i++) {
+        for (i = 0; i < g_record_count; i++) {
             if (strcmp(g_all_records[i].student_id, sid) == 0 &&
                 strcmp(g_all_records[i].course_id, cid) == 0) {
                 strcpy(g_all_records[i].name, new_rec.name);
@@ -219,6 +222,7 @@ static void handle_update(void) {
 }
 
 static void handle_find(void) {
+    int i;
     char keyword[50];
     printf("\n  == 查找记录 ==\n");
     printf("  请输入学号(精确)或姓名(精确): ");
@@ -241,7 +245,7 @@ static void handle_find(void) {
     StudentRecord *all = (StudentRecord*)malloc(total * sizeof(StudentRecord));
     int n = dm_to_array(g_dm, all, total);
     int found = 0;
-    for (int i = 0; i < n; i++) {
+    for (i = 0; i < n; i++) {
         if (strcmp(all[i].name, keyword) == 0) {
             if (!found) {
                 printf("  找到以下记录:\n");
@@ -397,6 +401,7 @@ static void handle_statistics(void) {
 }
 
 static void handle_cleanup(void) {
+    int i, j;
     printf("\n  == 过期记录清理 ==\n");
     printf("  基准日期: 2026-09-01\n");
     printf("  将删除选课日期早于 2023-09-01 (3年前) 的记录。\n");
@@ -407,7 +412,7 @@ static void handle_cleanup(void) {
     int n = dm_to_array(g_dm, all, total);
 
     int to_delete = 0;
-    for (int i = 0; i < n; i++) {
+    for (i = 0; i < n; i++) {
         if (strcmp(all[i].enroll_date, "2023-09-01") < 0) {
             to_delete++;
         }
@@ -431,12 +436,12 @@ static void handle_cleanup(void) {
 
     /* 执行删除 */
     int deleted = 0;
-    for (int i = g_record_count - 1; i >= 0; i--) {
+    for (i = g_record_count - 1; i >= 0; i--) {
         if (strcmp(g_all_records[i].enroll_date, "2023-09-01") < 0) {
             /* 从所有结构中删除 */
             dm_delete(g_dm, g_all_records[i].student_id, g_all_records[i].course_id);
             /* 从全局数组删除 */
-            for (int j = i; j < g_record_count - 1; j++)
+            for (j = i; j < g_record_count - 1; j++)
                 g_all_records[j] = g_all_records[j + 1];
             g_record_count--;
             deleted++;
@@ -468,6 +473,7 @@ static void handle_benchmark(void) {
 }
 
 static void handle_generate(void) {
+    int i;
     printf("\n  == 生成测试数据 ==\n");
     printf("  请输入要生成的记录数: ");
     int count;
@@ -486,7 +492,7 @@ static void handle_generate(void) {
         dm_destroy(g_dm);
         g_dm = dm_init(g_current_type);
         g_record_count = load_records(DATA_FILE, g_all_records, MAX_RECORDS);
-        for (int i = 0; i < g_record_count; i++)
+        for (i = 0; i < g_record_count; i++)
             dm_insert(g_dm, g_all_records[i]);
         printf("  已重新加载数据。当前记录数: %d\n", g_record_count);
     } else {
@@ -495,6 +501,7 @@ static void handle_generate(void) {
 }
 
 static void handle_switch_ds(void) {
+    int i;
     printf("\n  == 切换数据结构 ==\n");
     printf("  [1] 双向链表\n");
     printf("  [2] AVL树\n");
@@ -516,7 +523,7 @@ static void handle_switch_ds(void) {
     dm_destroy(g_dm);
     g_dm = dm_init(new_type);
     g_current_type = new_type;
-    for (int i = 0; i < g_record_count; i++)
+    for (i = 0; i < g_record_count; i++)
         dm_insert(g_dm, g_all_records[i]);
     printf("  已切换到 %s。当前记录数: %d\n",
            new_type == DS_LIST ? "双向链表" :

@@ -126,6 +126,7 @@ static void swap_records(StudentRecord *a, StudentRecord *b) {
 }
 
 void list_sort_by_score(DLinkedList *list, int ascending) {
+    int i, j;
     if (!list || list->size <= 1) return;
     int n = list->size;
     /* 将链表数据复制到数组排序 */
@@ -133,8 +134,8 @@ void list_sort_by_score(DLinkedList *list, int ascending) {
     list_to_array(list, arr, n);
 
     /* 冒泡排序 */
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - 1 - i; j++) {
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - 1 - i; j++) {
             if (ascending) {
                 if (arr[j].score > arr[j + 1].score)
                     swap_records(&arr[j], &arr[j + 1]);
@@ -147,7 +148,7 @@ void list_sort_by_score(DLinkedList *list, int ascending) {
 
     /* 将排序后的数据写回链表 */
     DListNode *cur = list->head;
-    for (int i = 0; i < n && cur; i++) {
+    for (i = 0; i < n && cur; i++) {
         cur->data = arr[i];
         cur = cur->next;
     }
