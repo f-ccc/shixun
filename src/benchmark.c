@@ -1,0 +1,105 @@
+﻿#include "benchmark.h"
+#include "list.h"
+#include "avl.h"
+#include "hash.h"
+#include "generator.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+static double get_time_ms(void) {
+    return (double)clock() / CLOCKS_PER_SEC * 1000.0;
+}
+
+static void* create_empty(DataStructureType type) {
+    switch (type) { case DS_LIST: return list_init(); case DS_AVL: return avl_init(); case DS_HASH: return hash_init(); }
+    return NULL;
+}
+
+static void destroy_all(void *ds, DataStructureType type) {
+    switch (type) { case DS_LIST: list_destroy(ds); break; case DS_AVL: avl_destroy(ds); break; case DS_HASH: hash_destroy(ds); break; }
+}
+
+void run_benchmark(int data_size) {
+    StudentRecord *data;
+    int t, i;
+    void *ds;
+    double t_ins, t_find, t_del, t_trav, t_sort;
+    size_t mem;
+    DataStructureType types[] = {DS_LIST, DS_AVL, DS_HASH};
+    const char *names[] = {"List", "AVL Tree", "Hash Table"};
+
+    data = (StudentRecord*)malloc(data_size * sizeof(StudentRecord));
+    generate_records(data, data_size);
+
+    printf("\n===============================================================\n");
+    printf("  Benchmark Report (Size: %d)\n", data_size);
+    printf("===============================================================\n");
+    printf("+-----------+-------------+----------+----------+----------+\n");
+    printf("| Operation | Structure   | Time(ms) | Mem(MB)  | Avg(us)  |\n");
+    printf("+-----------+-------------+----------+----------+----------+\n");
+
+    for (t = 0; t < 3; t++) {
+        ds = create_empty(types[t]);
+
+        /* Insert */
+        t_ins = get_time_ms();
+        for (i = 0; i < data_size; i++) {
+            switch (types[t]) { case DS_LIST: list_insert(ds, data[i]); break; case DS_AVL: avl_insert(ds, data[i]); break; case DS_HASH: hash_insert(ds, data[i]); break; }
+        }
+        t_ins = get_time_ms() - t_ins;
+
+        /* Find */
+        t_find = get_time_ms();
+        for (i = 0; i < data_size; i++) {
+            switch (types[t]) { case DS_LIST: list_find_by_id(ds, data[i].student_id); break; case DS_AVL: avl_find(ds, data[i].student_id); break; case DS_HASH: hash_find(ds, data[i].student_id); break; }
+        }
+        t_find = get_time_ms() - t_find;
+
+        /* Traverse */
+        t_trav = get_time_ms();
+        { StudentRecord *tmp = malloc(data_size * sizeof(StudentRecord));
+          switch (types[t]) { case DS_LIST: list_to_array(ds, tmp, data_size); break; case DS_AVL: avl_inorder_to_array(((AVLTree*)ds)->root, tmp, 0); break; case DS_HASH: hash_to_array(ds, tmp, data_size); break; }
+          free(tmp); }
+        t_trav = get_time_ms() - t_trav;
+
+        /* Sort */
+        { StudentRecord *tmp = malloc(data_size * sizeof(StudentRecord));
+          t_sort = get_time_ms();
+          switch (types[t]) { case DS_LIST: list_sort_by_score(ds, 1); break; case DS_AVL: avl_sort_by_score(ds, tmp, 1); break; case DS_HASH: hash_sort_by_score(ds, tmp, 1); break; }
+          t_sort = get_time_ms() - t_sort;
+          free(tmp); }
+
+        /* Memory */
+        mem = (types[t] == DS_LIST) ? sizeof(DLinkedList) + ((DLinkedList*)ds)->size * sizeof(DListNode) :
+              (types[t] == DS_AVL)  ? sizeof(AVLTree)     + ((AVLTree*)ds)->size     * sizeof(AVLNode) :
+                                       sizeof(HashTable)   + ((HashTable*)ds)->size   * sizeof(HashNode);
+
+        printf("| Insert    | %-11s | %8.3f | %8.2f | %8.1f |\n", names[t], t_ins, (double)mem/1048576.0, t_ins/data_size*1000.0);
+        printf("| Find      | %-11s | %8.3f | %8.2f | %8.1f |\n", names[t], t_find, (double)mem/1048576.0, t_find/data_size*1000.0);
+        printf("| Traverse  | %-11s | %8.3f | %8.2f | %8s |\n", names[t], t_trav, (double)mem/1048576.0, "");
+        printf("| Sort      | %-11s | %8.3f | %8.2f | %8s |\n", names[t], t_sort, (double)mem/1048576.0, "");
+
+        /* Delete */
+        t_del = get_time_ms();
+        for (i = 0; i < data_size; i++) {
+            switch (types[t]) { case DS_LIST: list_delete(ds, data[i].student_id, data[i].course_id); break; case DS_AVL: avl_delete(ds, data[i].student_id, data[i].course_id); break; case DS_HASH: hash_delete(ds, data[i].student_id, data[i].course_id); break; }
+        }
+        t_del = get_time_ms() - t_del;
+        printf("| Delete    | %-11s | %8.3f | %8.2f | %8.1f |\n", names[t], t_del, (double)mem/1048576.0, t_del/data_size*1000.0);
+        printf("+-----------+-------------+----------+----------+----------+\n");
+        destroy_all(ds, types[t]);
+    }
+
+    printf("\n  Theoretical Complexity:\n");
+    printf("  +-----------+------+--------+--------+\n");
+    printf("  | Operation | List | AVL    | Hash   |\n");
+    printf("  +-----------+------+--------+--------+\n");
+    printf("  | Insert    | O(1) | O(logn)| O(1)   |\n");
+    printf("  | Find      | O(n) | O(logn)| O(1)   |\n");
+    printf("  | Delete    | O(n) | O(logn)| O(1)   |\n");
+    printf("  +-----------+------+--------+--------+\n");
+    free(data);
+    printf("\n  Benchmark complete.\n");
+}
