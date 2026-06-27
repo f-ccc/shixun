@@ -1,4 +1,12 @@
-﻿#include <stdio.h>
+﻿/* ============================================================
+ * main.c - Main Program Entry Point
+ *
+ * Course Registration & Big Data Analysis System.
+ * CLI menu with 13 functions.
+ * All insert inputs fully validated.
+ * ============================================================ */
+
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>

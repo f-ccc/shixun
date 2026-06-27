@@ -1,4 +1,12 @@
-﻿#include "filter_sort.h"
+﻿/* ============================================================
+ * filter_sort.c - Filter & Sort Implementation
+ *
+ * filter_records: linear scan with condition checks.
+ * multi_key_sort: nested bubble sort over key list.
+ * print_record/header/records: ASCII table formatting.
+ * ============================================================ */
+
+#include "filter_sort.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -54,15 +62,15 @@ void print_record(const StudentRecord *rec) {
 
 void print_header(void) {
     printf("+--------------+----------+------------------+----------+----------------------+-----+---------+------------+-----+\n");
-    printf("| ID           | Name     | College          | CourseID | Course Name          | Cr  | Sem     | Date       | Score|\n");
+    printf("| 学号         | 姓名     | 学院             | 课程编号 | 课程名称             | 学分 | 学期    | 选课日期   | 成绩 |\n");
     printf("+--------------+----------+------------------+----------+----------------------+-----+---------+------------+-----+\n");
 }
 
 void print_records(const StudentRecord *arr, int size) {
     int i;
-    if (size <= 0) { printf("  (No records)\n"); return; }
+    if (size <= 0) { printf("  (无匹配记录)\n"); return; }
     print_header();
     for (i = 0; i < size; i++) print_record(&arr[i]);
     printf("+--------------+----------+------------------+----------+----------------------+-----+---------+------------+-----+\n");
-    printf("  Total: %d records\n", size);
+    printf("  总计: %d 条记录\n", size);
 }

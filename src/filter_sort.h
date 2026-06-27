@@ -1,4 +1,13 @@
-﻿#ifndef FILTER_SORT_H
+﻿/* ============================================================
+ * filter_sort.h - Filter & Sort Interface
+ *
+ * filter_records: multi-condition query (course/semester/
+ *   score range/college), supports fuzzy match.
+ * multi_key_sort: bubble sort with multiple sort keys.
+ * print_*: formatted table output helpers.
+ * ============================================================ */
+
+#ifndef FILTER_SORT_H
 #define FILTER_SORT_H
 #include "record.h"
 #include "operations.h"

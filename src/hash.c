@@ -1,4 +1,12 @@
-﻿#include "hash.h"
+﻿/* ============================================================
+ * hash.c - Hash Table Implementation
+ *
+ * Separate chaining (singly linked list per bucket).
+ * Insert uses head insertion for O(1). Find/delete
+ * traverse the bucket chain linearly.
+ * ============================================================ */
+
+#include "hash.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

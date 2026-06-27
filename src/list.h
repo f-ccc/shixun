@@ -1,4 +1,12 @@
-﻿#ifndef LIST_H
+﻿/* ============================================================
+ * list.h - Doubly Linked List Interface
+ *
+ * Doubly linked list storing StudentRecord entries.
+ * O(1) insert/delete at ends, O(n) linear search.
+ * Supports in-place bubble sort by score.
+ * ============================================================ */
+
+#ifndef LIST_H
 #define LIST_H
 #include "record.h"
 

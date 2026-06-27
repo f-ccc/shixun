@@ -1,4 +1,12 @@
-﻿#ifndef AVL_H
+﻿/* ============================================================
+ * avl.h - AVL Tree Interface
+ *
+ * Self-balancing BST keyed by student_id.
+ * Maintains |balance| <= 1 via LL/RR/LR/RL rotations.
+ * All operations O(log n). In-order traversal = sorted.
+ * ============================================================ */
+
+#ifndef AVL_H
 #define AVL_H
 #include "record.h"
 

@@ -1,4 +1,12 @@
-﻿#ifndef RECORD_H
+﻿/* ============================================================
+ * record.h - Common Type Definitions
+ *
+ * Core data structures for the Course Registration System:
+ * StudentRecord (main entity), enum types, filter/sort structs,
+ * and function pointer typedefs for traversal callbacks.
+ * ============================================================ */
+
+#ifndef RECORD_H
 #define RECORD_H
 
 typedef struct {

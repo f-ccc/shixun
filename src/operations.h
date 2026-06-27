@@ -1,4 +1,12 @@
-﻿#ifndef OPERATIONS_H
+﻿/* ============================================================
+ * operations.h - Unified Operation Interface
+ *
+ * DataManager wraps list/avl/hash behind a single API.
+ * Client code uses dm_insert/dm_find/... without knowing
+ * which backend structure is active.
+ * ============================================================ */
+
+#ifndef OPERATIONS_H
 #define OPERATIONS_H
 #include "record.h"
 #include "list.h"

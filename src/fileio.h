@@ -1,4 +1,12 @@
-﻿#ifndef FILEIO_H
+﻿/* ============================================================
+ * fileio.h - CSV File I/O Interface
+ *
+ * Load/save/export enrollment records in CSV format:
+ * student_id,name,college,course_id,course_name,
+ * credit,semester,enroll_date,score
+ * ============================================================ */
+
+#ifndef FILEIO_H
 #define FILEIO_H
 #include "record.h"
 

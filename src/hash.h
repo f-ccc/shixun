@@ -1,4 +1,12 @@
-﻿#ifndef HASH_H
+﻿/* ============================================================
+ * hash.h - Hash Table Interface (Separate Chaining)
+ *
+ * Key = student_id (last 6 digits).
+ * Hash function: atoi(last_6_digits) % 997 (prime).
+ * Average O(1) insert/find/delete.
+ * ============================================================ */
+
+#ifndef HASH_H
 #define HASH_H
 #include "record.h"
 

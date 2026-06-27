@@ -1,4 +1,13 @@
-﻿#include "avl.h"
+﻿/* ============================================================
+ * avl.c - AVL Tree Implementation
+ *
+ * Recursive insert/delete with height tracking and balance
+ * restoration. Four rotation cases: LL (right rotate),
+ * RR (left rotate), LR (left+right), RL (right+left).
+ * Internal helpers: create_node, height, get_balance.
+ * ============================================================ */
+
+#include "avl.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

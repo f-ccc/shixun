@@ -1,4 +1,11 @@
-﻿#include "operations.h"
+﻿/* ============================================================
+ * operations.c - Unified Operation Implementation
+ *
+ * Delegates each dm_* call to the active backend via
+ * a switch on DataManager.type.
+ * ============================================================ */
+
+#include "operations.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

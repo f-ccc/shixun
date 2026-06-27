@@ -1,4 +1,12 @@
-﻿#include "fileio.h"
+﻿/* ============================================================
+ * fileio.c - CSV File I/O Implementation
+ *
+ * load_records: reads CSV, parses each line with strtok.
+ * save_to_csv: writes records in standard CSV format.
+ * export_to_csv: alias for save_to_csv (filtered results).
+ * ============================================================ */
+
+#include "fileio.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

@@ -1,4 +1,12 @@
-﻿#include "list.h"
+﻿/* ============================================================
+ * list.c - Doubly Linked List Implementation
+ *
+ * Implements all list operations: init, insert (tail), delete
+ * (by student_id+course_id), update, find (by id/name),
+ * traverse, bubble sort, to_array, destroy.
+ * ============================================================ */
+
+#include "list.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

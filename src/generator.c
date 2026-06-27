@@ -1,4 +1,13 @@
-﻿#include "generator.h"
+﻿/* ============================================================
+ * generator.c - Test Data Generator Implementation
+ *
+ * Uses rand() with surname/given_name lists, course table,
+ * auto-incrementing student IDs. Date/semester are derived
+ * from the record index. Score uses Box-Muller transform
+ * for approximate normal distribution.
+ * ============================================================ */
+
+#include "generator.h"
 #include "fileio.h"
 #include <stdio.h>
 #include <stdlib.h>

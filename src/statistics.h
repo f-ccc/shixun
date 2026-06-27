@@ -1,4 +1,12 @@
-﻿#ifndef STATISTICS_H
+﻿/* ============================================================
+ * statistics.h - Statistical Analysis Interface
+ *
+ * 5 built-in reports:
+ *   Course enrollment / Student courses / College dist /
+ *   Semester dist / Score distribution (A/B/C/D/F)
+ * ============================================================ */
+
+#ifndef STATISTICS_H
 #define STATISTICS_H
 #include "record.h"
 #include "operations.h"
