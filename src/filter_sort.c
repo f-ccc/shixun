@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
  * filter_sort.c - Filter & Sort Implementation
  *
  * filter_records: linear scan with condition checks.

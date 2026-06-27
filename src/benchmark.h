@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
  * benchmark.h - Performance Benchmark Interface
  *
  * run_benchmark: times insert/find/traverse/sort/delete

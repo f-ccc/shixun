@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
  * operations.h - Unified Operation Interface
  *
  * DataManager wraps list/avl/hash behind a single API.

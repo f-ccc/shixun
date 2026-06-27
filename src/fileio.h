@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
  * fileio.h - CSV File I/O Interface
  *
  * Load/save/export enrollment records in CSV format:

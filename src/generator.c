@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
  * generator.c - Test Data Generator Implementation
  *
  * Uses rand() with surname/given_name lists, course table,

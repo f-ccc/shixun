@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
  * benchmark.c - Performance Benchmark Implementation
  *
  * Uses clock() for timing (ms precision). Each operation

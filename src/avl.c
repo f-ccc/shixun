@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
  * avl.c - AVL Tree Implementation
  *
  * Recursive insert/delete with height tracking and balance

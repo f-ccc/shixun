@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
  * record.h - Common Type Definitions
  *
  * Core data structures for the Course Registration System:

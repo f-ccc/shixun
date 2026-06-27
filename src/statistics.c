@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
  * statistics.c - Statistical Analysis Implementation
  *
  * Each stat_* function extracts all records, groups/counts
@@ -144,11 +144,11 @@ void stat_score_distribution(DataManager *dm) {
     printf("  +------+-------+-------+\n");
     printf("  | 等级 | 范围  | 人数  |\n");
     printf("  +------+-------+-------+\n");
-    printf("  | A    | 90-100| %5d |\n", excellent);
-    printf("  | B    | 80-89 | %5d |\n", good);
-    printf("  | C    | 70-79 | %5d |\n", medium);
-    printf("  | D    | 60-69 | %5d |\n", pass);
-    printf("  | F    | <60   | %5d |\n", fail);
+    printf("  | 优秀  | 90-100| %5d |\n", excellent);
+    printf("  | 良好  | 80-89 | %5d |\n", good);
+    printf("  | 中等  | 70-79 | %5d |\n", medium);
+    printf("  | 及格  | 60-69 | %5d |\n", pass);
+    printf("  | 不及格| <60   | %5d |\n", fail);
     printf("  +------+-------+-------+\n");
     printf("  | 总计 |       | %5d |\n", n);
     printf("  +------+-------+-------+\n");

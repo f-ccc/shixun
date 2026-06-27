@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
  * list.c - Doubly Linked List Implementation
  *
  * Implements all list operations: init, insert (tail), delete

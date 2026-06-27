@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
  * filter_sort.h - Filter & Sort Interface
  *
  * filter_records: multi-condition query (course/semester/

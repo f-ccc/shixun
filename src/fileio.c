@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
  * fileio.c - CSV File I/O Implementation
  *
  * load_records: reads CSV, parses each line with strtok.

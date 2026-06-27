@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
  * list.h - Doubly Linked List Interface
  *
  * Doubly linked list storing StudentRecord entries.

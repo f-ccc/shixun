@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
  * generator.h - Test Data Generator Interface
  *
  * Generates randomized enrollment records for testing.

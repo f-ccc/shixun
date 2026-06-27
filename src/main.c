@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
  * main.c - Main Program Entry Point
  *
  * Course Registration & Big Data Analysis System.
@@ -194,7 +194,7 @@ static int check_duplicate(DataManager *dm, const char *sid, const char *cid) {
 static void show_menu(void) {
     const char *names[] = {"List", "AVL Tree", "Hash Table"};
     printf("\n--------------------------------------------------------\n");
-    printf("  Structure: %s | Records: %d\n", names[g_type], dm_size(g_dm));
+    printf("  数据结构: %s | 记录数: %d\n", names[g_type], dm_size(g_dm));
     printf("--------------------------------------------------------\n");
     printf("  [1] Insert    [2] Delete    [3] Update    [4] Find\n");
     printf("  [5] Filter    [6] Sort      [7] Stats     [8] Cleanup\n");
@@ -208,14 +208,14 @@ static void handle_insert(void) {
     char sid[20], cid[20];
     int ret;
 
-    printf("\n  == Insert Record ==\n");
-    printf("  Student ID (12 digits): ");
+    printf("\n  == 插入记录 ==\n");
+    printf("  学号(12位): ");
     if (scanf("%19s", sid) != 1) { while(getchar()!='\n'); return; }
     while(getchar()!='\n');
     if (!validate_student_id(sid, 0)) return;
     strcpy(rec.student_id, sid);
 
-    printf("  Course ID (8 chars, e.g. CS300101): ");
+    printf("  课程编号(例: CS300101): ");
     if (scanf("%19s", cid) != 1) return;
     while(getchar()!='\n');
     if (!validate_course_id(cid)) return;
@@ -224,27 +224,27 @@ static void handle_insert(void) {
     /* Check duplicate */
     if (check_duplicate(g_dm, rec.student_id, rec.course_id)) return;
 
-    printf("  Name: "); scanf("%19s", rec.name); while(getchar()!='\n');
+    printf("  姓名: "); scanf("%19s", rec.name); while(getchar()!='\n');
     if (!validate_name(rec.name)) return;
 
-    printf("  College: "); scanf("%29s", rec.college); while(getchar()!='\n');
+    printf("  学院: "); scanf("%29s", rec.college); while(getchar()!='\n');
     if (!validate_college(rec.college)) return;
 
-    printf("  Course Name: "); scanf("%49s", rec.course_name); while(getchar()!='\n');
+    printf("  课程名: "); scanf("%49s", rec.course_name); while(getchar()!='\n');
     if (!validate_course_name(rec.course_name)) return;
 
-    printf("  Credit (0.0-10.0, step 0.5): ");
+    printf("  学分(0.0-10.0,步长0.5): ");
     if (scanf("%f", &rec.credit) != 1) { while(getchar()!='\n'); printf("  Error: Invalid credit format.\n"); return; }
     while(getchar()!='\n');
     if (!validate_credit(rec.credit)) return;
 
-    printf("  Semester (YYYY-NN): "); scanf("%7s", rec.semester); while(getchar()!='\n');
+    printf("  学期(YYYY-NN): "); scanf("%7s", rec.semester); while(getchar()!='\n');
     if (!validate_semester(rec.semester)) return;
 
-    printf("  Date (YYYY-MM-DD): "); scanf("%10s", rec.enroll_date); while(getchar()!='\n');
+    printf("  日期(YYYY-MM-DD): "); scanf("%10s", rec.enroll_date); while(getchar()!='\n');
     if (!validate_date(rec.enroll_date)) return;
 
-    printf("  Score (0-100): ");
+    printf("  成绩(0-100): ");
     if (scanf("%d", &rec.score) != 1) { while(getchar()!='\n'); printf("  Error: Invalid score.\n"); return; }
     while(getchar()!='\n');
     if (!validate_score(rec.score)) return;
@@ -261,8 +261,8 @@ static void handle_insert(void) {
 static void handle_delete(void) {
     char sid[13], cid[9]; int i, ret;
     printf("\n  == Delete Record ==\n");
-    printf("  Student ID: "); scanf("%12s", sid);
-    printf("  Course ID: "); scanf("%8s", cid);
+    printf("  学号: "); scanf("%12s", sid);
+    printf("  课程编号: "); scanf("%8s", cid);
     ret = dm_delete(g_dm, sid, cid);
     if (ret == RES_OK) {
         for (i = 0; i < g_count; i++)
@@ -277,15 +277,15 @@ static void handle_delete(void) {
 static void handle_update(void) {
     char sid[13], cid[9]; StudentRecord nr; int i, ret;
     printf("\n  == Update Record ==\n");
-    printf("  Student ID: "); scanf("%12s", sid);
-    printf("  Course ID: "); scanf("%8s", cid);
-    printf("  New Name: "); scanf("%19s", nr.name);
-    printf("  New College: "); scanf("%29s", nr.college);
-    printf("  New Course Name: "); scanf("%49s", nr.course_name);
-    printf("  New Credit: "); scanf("%f", &nr.credit);
-    printf("  New Semester: "); scanf("%7s", nr.semester);
-    printf("  New Date: "); scanf("%10s", nr.enroll_date);
-    printf("  New Score: "); scanf("%d", &nr.score);
+    printf("  学号: "); scanf("%12s", sid);
+    printf("  课程编号: "); scanf("%8s", cid);
+    printf("  新姓名: "); scanf("%19s", nr.name);
+    printf("  新学院: "); scanf("%29s", nr.college);
+    printf("  新课程名: "); scanf("%49s", nr.course_name);
+    printf("  新学分: "); scanf("%f", &nr.credit);
+    printf("  新学期: "); scanf("%7s", nr.semester);
+    printf("  新日期: "); scanf("%10s", nr.enroll_date);
+    printf("  新成绩: "); scanf("%d", &nr.score);
     ret = dm_update(g_dm, sid, cid, nr);
     if (ret == RES_OK) {
         for (i = 0; i < g_count; i++)
@@ -311,17 +311,17 @@ static void handle_filter(void) {
     FilterCondition c; memset(&c,0,sizeof(c)); c.score_min = -1; c.score_max = -1;
     StudentRecord r[MAX_RECORDS]; int ch, n;
     printf("\n  == Filter ==\n  [1]Course [2]Semester [3]Score [4]College [0]Go: ");
-    while (1) { printf("\n  Option: "); scanf("%d",&ch); if (!ch) break;
+    while (1) { printf("\n  选择: "); scanf("%d",&ch); if (!ch) break;
         switch(ch) {
-            case 1: printf("  Course: "); scanf("%49s",c.course_name); printf("  Fuzzy(1/0): "); scanf("%d",&c.fuzzy_match); break;
-            case 2: printf("  Semester: "); scanf("%7s",c.semester); break;
-            case 3: printf("  Min(-1=none): "); scanf("%d",&c.score_min); printf("  Max(-1=none): "); scanf("%d",&c.score_max); break;
-            case 4: printf("  College: "); scanf("%29s",c.college); break;
+            case 1: printf("  课程: "); scanf("%49s",c.course_name); printf("  模糊(1/0): "); scanf("%d",&c.fuzzy_match); break;
+            case 2: printf("  学期: "); scanf("%7s",c.semester); break;
+            case 3: printf("  最低(-1=不限): "); scanf("%d",&c.score_min); printf("  最高(-1=不限): "); scanf("%d",&c.score_max); break;
+            case 4: printf("  学院: "); scanf("%29s",c.college); break;
         }
     }
     n = filter_records(g_dm, &c, r, MAX_RECORDS);
     printf("\n  Result: %d record(s)\n", n);
-    if (n > 0) { print_records(r, n); printf("  Export(1/0): "); scanf("%d",&ch); if (ch) { char fn[100]; printf("  Filename: "); scanf("%99s",fn); export_to_csv(fn,r,n); printf("  Exported to %s\n",fn); } }
+    if (n > 0) { print_records(r, n); printf("  导出(1/0): "); scanf("%d",&ch); if (ch) { char fn[100]; printf("  文件名: "); scanf("%99s",fn); export_to_csv(fn,r,n); printf("  Exported to %s\n",fn); } }
 }
 
 static void handle_sort(void) {
@@ -332,14 +332,14 @@ static void handle_sort(void) {
     n = dm_to_array(g_dm, a, n);
     { SortCondition k[2] = {{"score",ch==1?ASCENDING:DESCENDING},{"student_id",ASCENDING}}; multi_key_sort(a,n,k,2); }
     print_records(a,n);
-    printf("  Export(1/0): "); scanf("%d",&ch); if (ch) { char fn[100]; printf("  File: "); scanf("%99s",fn); export_to_csv(fn,a,n); }
+    printf("  导出(1/0): "); scanf("%d",&ch); if (ch) { char fn[100]; printf("  文件: "); scanf("%99s",fn); export_to_csv(fn,a,n); }
     free(a);
 }
 
 static void handle_statistics(void) {
     int ch; printf("\n  == Stats ==\n  [1]Course [2]Student [3]College [4]Semester [5]Score: "); scanf("%d",&ch);
     switch(ch) {
-        case 1: { int c; printf("  Capacity: "); scanf("%d",&c); stat_course_enrollment(g_dm,c); break; }
+        case 1: { int c; printf("  容量: "); scanf("%d",&c); stat_course_enrollment(g_dm,c); break; }
         case 2: stat_student_courses(g_dm); break;
         case 3: stat_college_distribution(g_dm); break;
         case 4: stat_semester_distribution(g_dm); break;
@@ -355,7 +355,7 @@ static void handle_cleanup(void) {
     for (i = 0; i < g_count; i++) if (strcmp(a[i].enroll_date, "2023-09-01") < 0) td++;
     free(a);
     if (!td) { printf("  No records to delete.\n"); return; }
-    printf("  %d records to delete. Confirm(1/0): ", td);
+    printf("  %d 条记录将删除，确认(1/0): ", td);
     { int cf; scanf("%d",&cf); if (!cf) { printf("  Cancelled.\n"); return; } }
     { int del=0;
     for (i = g_count-1; i >= 0; i--)
@@ -409,24 +409,24 @@ static void save_and_exit(void) {
     dm_to_array(g_dm, a, n);
     save_to_csv(DATA_FILE, a, n);
     free(a); dm_destroy(g_dm);
-    printf("\n  Saved. Goodbye!\n");
+    printf("\n  已保存。谢谢使用!\n");
 }
 
 int main(void) {
     int choice, i;
     printf("\n============================================================\n");
-    printf("  Course Registration System\n");
-    printf("  Data Structures Course Design\n");
+    printf("  校园选课记录管理系统\n");
+    printf("  数据结构与算法课程设计\n");
     printf("============================================================\n");
     g_dm = dm_init(g_type);
     if (!g_dm) { printf("  Fatal: init failed.\n"); return 1; }
     g_count = load_records(DATA_FILE, g_all, MAX_RECORDS);
     for (i = 0; i < g_count; i++) dm_insert(g_dm, g_all[i]);
-    printf("  Records loaded: %d\n", g_count);
+    printf("  \u5df2\u52a0\u8f7d\u8bb0\u5f55: %d\n", g_count);
     printf("============================================================\n");
     do {
         show_menu();
-        printf("  Choice: ");
+        printf("  请选择: ");
         if (scanf("%d", &choice) != 1) { while(getchar()!='\n'); choice = 0; }
         while(getchar()!='\n');
         switch (choice) {

@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
  * operations.c - Unified Operation Implementation
  *
  * Delegates each dm_* call to the active backend via

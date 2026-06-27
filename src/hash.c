@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
  * hash.c - Hash Table Implementation
  *
  * Separate chaining (singly linked list per bucket).
